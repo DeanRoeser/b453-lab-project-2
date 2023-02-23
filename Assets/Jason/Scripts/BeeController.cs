@@ -11,24 +11,37 @@ public class BeeController : MonoBehaviour
     public float force = 100;
     public TMP_Text winLose;
     public TMP_Text message;
+    public Vector3 initialPosition;
+    public Vector3 pausedPosition;
+    public bool paused = false;
+    public GameObject trail_object;
 
     void Start()
     {
         winLose.enabled = false;
         rb2D = GetComponent<Rigidbody2D>();
         rb2D.isKinematic = true;
+        initialPosition = transform.position;
     }
 
     private void FixedUpdate()
     {
-        if(rb2D.velocity.x >= 0)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
+
+        if(paused){
+            transform.position = pausedPosition;
+        }else{
+            if(rb2D.velocity.x >= 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else if(rb2D.velocity.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            spawnTrail();
         }
-        else if(rb2D.velocity.x < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
+
+        
     }
 
     private void Update()
@@ -40,12 +53,40 @@ public class BeeController : MonoBehaviour
         }
     }
 
+    public void spawnTrail() 
+    {
+        Instantiate(trail_object, transform.position, transform.rotation);
+    }
+
     public void StartBee()
     {
+        paused = false;
         GetComponent<CircleCollider2D>().enabled = true;
+        transform.position = initialPosition;
         rb2D.isKinematic = false;
         rb2D.AddForce(transform.right * force);
+        clearTrail();
+
+
+        
     }
+
+
+    public void clearTrail()
+    {
+        GameObject[] trails = GameObject.FindGameObjectsWithTag("Trail");
+        foreach(GameObject trail in trails)
+            GameObject.Destroy(trail);
+    }
+
+
+    public void PauseBee()
+    {
+        paused = true;
+        rb2D.velocity = rb2D.velocity * 0f;
+        pausedPosition = transform.position;
+    }
+
 
     private void SlowBee()
     {
@@ -56,7 +97,7 @@ public class BeeController : MonoBehaviour
     private void FastBee()
     {
         Debug.Log("FastBee");
-        rb2D.velocity = rb2D.velocity * 1.2f;
+        rb2D.velocity = rb2D.velocity - rb2D.velocity;
     }
 
     IEnumerator NextLevelTimer()

@@ -14,6 +14,8 @@ TagManager:
   - PlayButton
   - Candle
   - Flower
+  - Pause
+  - Trail
   layers:
   - Default
   - TransparentFX

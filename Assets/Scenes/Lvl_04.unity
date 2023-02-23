@@ -924,6 +924,10 @@ PrefabInstance:
       propertyPath: winLose
       value: 
       objectReference: {fileID: 1901232973}
+    - target: {fileID: 3810174422204907965, guid: bd5b7d597570d734683a3f9ccaaf3168, type: 3}
+      propertyPath: trail_object
+      value: 
+      objectReference: {fileID: 5247618950368261596, guid: a49734c279729494db9f1b400be8cad3, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd5b7d597570d734683a3f9ccaaf3168, type: 3}
 --- !u!1001 &4469992430136990807

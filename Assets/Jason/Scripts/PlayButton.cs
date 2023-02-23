@@ -12,5 +12,12 @@ public class PlayButton : MonoBehaviour
         GameObject.FindGameObjectWithTag("Bee").GetComponent<BeeController>().StartBee();
         GetComponent<BoxCollider2D>().enabled = false;
         doNotClick = true;
+        GameObject.FindGameObjectWithTag("Pause").GetComponent<PauseButton>().showButton();
+    }
+
+    public void resetButton()
+    {
+        GetComponent<BoxCollider2D>().enabled = true;
+        doNotClick = false;
     }
 }
